@@ -1500,6 +1500,14 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+  if (isMobile) {
+    document.querySelectorAll('video').forEach(function(v) {
+      v.muted = true;
+      v.play().then(function() { v.pause(); })['catch'](function() {});
+    });
+  }
+
   gsap.registerPlugin(ScrollTrigger);
 
   function setupScrollVideo(videoEl, triggerEl) {
