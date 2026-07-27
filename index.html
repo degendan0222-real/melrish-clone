@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The MelRish Studio — Dubai Wedding Photographer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1c1815;
+      --paper: #f6f1ea;
+      --paper-deep: #efe7db;
+      --rose: #b07c63;
+      --rose-deep: #8a5d47;
+      --line: #d8cdbd;
+      --muted: #6b6258;
+      --serif: 'Fraunces', Georgia, serif;
+      --sans: 'Jost', -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: #0a0a0a;
+      color: #f0ece4;
+      overflow-x: hidden;
+      font-weight: 300;
+    }
+
+    #container {
+      position: relative;
+      height: 500vh;
+    }
+
+    .video-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.5) 40%, rgba(10,10,10,0.85) 100%);
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 2rem;
+    }
+
+    .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .inner-wide {
+      max-width: 1300px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .tagline {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #c9a96e;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+      line-height: 1.8;
+      color: #c5bfb0;
+      font-weight: 300;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2.2rem;
+      border: 1px solid #c9a96e;
+      background: transparent;
+      color: #f0ece4;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .btn:hover {
+      background: #c9a96e;
+      color: #0a0a0a;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 0.6rem 2rem;
+      background: rgba(10,10,10,0.6);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .header-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+    }
+
+    .header-col {
+      display: flex;
+      align-items: center;
+    }
+
+    .col-left {
+      justify-content: flex-start;
+    }
+
+    .col-center {
+      justify-content: center;
+    }
+
+    .col-right {
+      justify-content: flex-end;
+    }
+
+    .logo-img {
+      width: 140px;
+      height: auto;
+      display: block;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      font-size: 1.4rem;
+      color: #f0ece4;
+      line-height: 1;
+      z-index: 110;
+    }
+
+    .menu-toggle .icon-close {
+      display: none;
+    }
+
+    .menu-toggle.open .icon-open {
+      display: none;
+    }
+
+    .menu-toggle.open .icon-close {
+      display: inline;
+    }
+
+    .header-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(16px);
+      z-index: 105;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-nav.open {
+      display: flex;
+    }
+
+    .header-nav ul {
+      list-style: none;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header-nav li {
+      margin: 1.5rem 0;
+    }
+
+    .header-nav a {
+      color: #8a8478;
+      text-decoration: none;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 300;
+      transition: color 0.3s;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .header-nav a:hover,
+    .header-nav a.active {
+      color: #c9a96e;
+    }
+
+    /* Wrap */
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .hero .wrap {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    @media (min-width: 640px) {
+      .wrap,
+      .inner {
+        padding: 0 28px;
+      }
+    }
+
+    @media (min-width: 900px) {
+      section {
+        padding: 96px 0;
+      }
+
+      .wrap,
+      .inner {
+        padding: 0 32px;
+      }
+
+      .split {
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+      }
+
+      .split-img.wide img {
+        aspect-ratio: 1 / 1;
+      }
+
+      .story h2 {
+        max-width: 20ch;
+      }
+    }
+
+    .inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-head {
+      max-width: 62ch;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    @media (min-width: 640px) {
+      .blog-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 26px;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .blog-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 54px;
+      }
+    }
+
+    .blog {
+      background: var(--paper-deep);
+      min-height: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .post {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      transition: transform .4s;
+    }
+
+    .post:hover {
+      transform: translateY(-6px);
+    }
+
+    .post-img {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+    }
+
+    .post-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .7s;
+    }
+
+    .post:hover .post-img img {
+      transform: scale(1.05);
+    }
+
+    .post-body {
+      padding: 24px 22px 28px;
+    }
+
+    .post-date {
+      display: block;
+      font-size: .68rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .post-body h3 {
+      font-size: 1.2rem;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+
+    .post-body .read {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--rose-deep);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .blog .btn-ghost:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* Hero */
+    .hero-section {
+      padding-top: 12rem;
+      min-height: 100vh;
+    }
+
+    .hero-text {
+      max-width: 680px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .9s ease, transform .9s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    .blog .eyebrow {
+      color: #8a5d47;
+    }
+
+    .eyebrow {
+      font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+      color: #c9a96e;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-weight: 400;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 8vw, 5rem);
+      margin: 18px 0 8px;
+      color: var(--paper);
+    }
+
+    h1, h2, h3 {
+      font-family: var(--serif);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -.01em;
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: #c9a96e;
+    }
+
+    .hero-text .sub {
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      color: #b8a88a;
+      font-weight: 300;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-text p {
+      max-width: 650px;
+      font-size: 1rem;
+      color: #a0988a;
+    }
+
+    .hero-points {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+
+    .hero-points li {
+      padding: 0.6rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      font-size: 0.95rem;
+      color: #a0988a;
+    }
+
+    .hero-points li::before {
+      content: "\2014";
+      position: absolute;
+      left: 0;
+      color: #c9a96e;
+    }
+
+    .hero-points li strong {
+      color: #f0ece4;
+      font-weight: 500;
+    }
+
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin: 1.5rem 0 0;
+    }
+
+    .stat-item {
+      border-left: 1px solid rgba(201,169,110,0.3);
+      padding-left: 1.25rem;
+    }
+
+    .stat-item .num {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      color: #c9a96e;
+      line-height: 1;
+    }
+
+    .stat-item .label {
+      font-size: 0.75rem;
+      color: #8a8478;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.3rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .hero-cta .btn:first-child {
+      background: #c9a96e;
+      color: #0a0a0a;
+      border-color: #c9a96e;
+    }
+
+    .hero-cta .btn:first-child:hover {
+      background: transparent;
+      color: #c9a96e;
+    }
+
+    .btn-line {
+      background: transparent;
+      border: 1px solid #c9a96e;
+      color: #c9a96e;
+    }
+
+    .btn-line:hover {
+      background: #c9a96e;
+      color: #0a0a0a;
+    }
+
+    /* Films */
+    .section-head h2 {
+      color: #0a0a0a;
+    }
+
+    @media (min-width: 900px) {
+      .section-head h2 {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        margin: 14px 0 18px;
+      }
+    }
+
+    .films-section h2 {
+      color: #fff;
+    }
+
+    .films-section {
+      text-align: center;
+    }
+
+    .films-section .section-head {
+      margin: 0 auto;
+    }
+
+    .films-section p {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .film-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .film-card {
+      aspect-ratio: 16 / 9;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    .film-card:hover {
+      border-color: rgba(201,169,110,0.4);
+    }
+
+    /* Split layout */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .split {
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+      }
+    }
+
+    .split.flip {
+      direction: rtl;
+    }
+
+    .split.flip > * {
+      direction: ltr;
+    }
+
+    .split-text h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    .split-text p {
+      font-size: 0.95rem;
+      color: #5a5246;
+      margin-bottom: 1.2rem;
+    }
+
+    .split-img img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+    }
+
+    .film img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .8s ease;
+    }
+
+    .film {
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .film .play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+
+    .film .play span {
+      font-size: 3rem;
+      color: #fff;
+      opacity: 0.8;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .film:hover .play {
+      background: rgba(0,0,0,0.15);
+    }
+
+    .film:hover .play span {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .sde-section {
+      background: var(--paper);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 3rem 0;
+      min-height: auto;
+    }
+
+    .sde-section .split-text h2 {
+      color: var(--ink);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--rose);
+      background: rgba(176,124,99,0.06);
+    }
+
+    .section-vid {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-vid .inner,
+    .section-vid .wrap {
+      position: relative;
+      z-index: 2;
+    }
+
+    .sec-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+
+    .sec-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .sec-overlay.dark {
+      background: rgba(10,10,10,0.55);
+    }
+
+    .sec-overlay.light {
+      background: rgba(246,241,234,0.7);
+    }
+
+    /* About */
+    .about-section {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .about-section .inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .story .eyebrow {
+      color: var(--rose);
+    }
+
+    .story h2 {
+      color: var(--paper);
+      font-size: clamp(1.8rem, 6vw, 3.2rem);
+      margin: 14px 0 22px;
+    }
+
+    .story .inner > div:last-child {
+      align-self: start;
+    }
+
+    .story-img img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+    }
+
+    .about-section .tagline {
+      color: var(--rose);
+    }
+
+    .about-section h2 {
+      color: var(--paper);
+    }
+
+    .about-section p {
+      color: #a0988a;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-section .btn {
+      color: var(--ink);
+      background: var(--paper);
+      border-color: var(--paper);
+    }
+
+    .about-section .btn:hover {
+      background: transparent;
+      color: var(--paper);
+    }
+
+    /* Prewedding */
+    .prewedding-section {
+      min-height: auto;
+      background: var(--paper);
+    }
+
+    .prewedding-section .split-text h2 {
+      color: var(--ink);
+    }
+
+    .prewedding-section .split-text p {
+      color: #5a5246;
+    }
+
+    .prewedding-section .btn-ghost {
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .prewedding-section .btn-ghost:hover {
+      border-color: var(--rose);
+      background: rgba(176,124,99,0.06);
+    }
+
+
+
+    /* Where We Shoot */
+    .locations-section {
+      text-align: center;
+      background: var(--paper);
+      min-height: auto;
+    }
+
+    .locations-section h2 {
+      color: var(--ink);
+    }
+
+    .loc-row {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .loc {
+      padding: 10px 24px;
+    }
+
+    .loc a,
+    .loc span {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 6vw, 2.4rem);
+      letter-spacing: .04em;
+      transition: color .35s;
+      color: var(--ink);
+    }
+
+    .loc a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .loc a:hover {
+      color: var(--rose-deep);
+    }
+
+    @media (min-width: 640px) {
+      .loc {
+        padding: 0 40px;
+        border-left: 1px solid var(--line);
+      }
+      .loc:first-child {
+        border-left: none;
+      }
+    }
+
+    /* Journal */
+    .journal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .journal-card .thumb {
+      aspect-ratio: 16 / 10;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 1rem;
+    }
+
+    .journal-card .date {
+      font-size: 0.75rem;
+      color: #8a8478;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .journal-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .journal-card a {
+      color: #c9a96e;
+      text-decoration: none;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* More Services */
+    .services-section {
+      min-height: auto;
+      background: var(--paper);
+      justify-content: flex-start;
+    }
+
+    .services-section .eyebrow {
+      color: var(--rose-deep);
+    }
+
+    .svc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin-top: 36px;
+    }
+
+    .svc {
+      padding: 34px 28px;
+      border: 1px solid var(--line);
+      background: var(--paper-deep);
+    }
+
+    .svc h3 {
+      font-size: 1.5rem;
+      margin-bottom: 14px;
+      color: var(--ink);
+    }
+
+    .svc p {
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .svc a {
+      font-size: .74rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--rose-deep);
+      border-bottom: 1px solid var(--rose-deep);
+      padding-bottom: 3px;
+      text-decoration: none;
+    }
+
+    @media (min-width: 640px) {
+      .svc-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 26px;
+      }
+      .svc {
+        padding: 46px 42px;
+      }
+      .svc h3 {
+        font-size: 1.7rem;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .svc-grid {
+        gap: 30px;
+        margin-top: 54px;
+      }
+    }
+
+    /* FAQ */
+    .faq {
+      background: var(--paper-deep);
+      min-height: auto;
+    }
+
+    .faq .eyebrow {
+      color: var(--rose-deep);
+    }
+
+    .faq-list {
+      margin-top: 34px;
+      max-width: 840px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .faq-item {
+      border-top: 1px solid var(--line);
+      padding: 4px 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      padding: 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      color: var(--ink);
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: "+";
+      color: var(--rose-deep);
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 1.5rem;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: transform .3s;
+    }
+
+    .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-item p {
+      color: var(--muted);
+      padding: 0 0 22px;
+      max-width: 70ch;
+      font-size: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .faq-list {
+        margin-top: 48px;
+      }
+      .faq-item summary {
+        font-size: 1.3rem;
+        padding: 20px 0;
+        align-items: center;
+        gap: 20px;
+      }
+      .faq-item summary::after {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* Contact */
+    .contact {
+      background: var(--ink);
+      color: var(--paper);
+      min-height: auto;
+    }
+    .contact .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 40px;
+    }
+    .contact .ci {
+      margin-bottom: 32px;
+    }
+    .contact .ci:last-child {
+      margin-bottom: 0;
+    }
+    .contact h2 {
+      color: var(--paper);
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      margin: 14px 0 36px;
+    }
+    .contact .ci h3 {
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: .78rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 10px;
+    }
+    .contact .ci p {
+      color: #cdc3b6;
+      line-height: 1.9;
+    }
+    .contact .ci a {
+      color: var(--paper);
+      text-decoration: none;
+    }
+    .contact .ci a:hover {
+      color: var(--rose);
+      border-color: var(--rose);
+    }
+    .contact .eyebrow {
+      color: var(--rose-deep);
+    }
+    .contact .socials {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .contact .socials a {
+      font-size: .76rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #cdc3b6;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 3px;
+      text-decoration: none;
+      transition: all .3s;
+    }
+    .contact .socials a:hover {
+      color: var(--rose);
+      border-color: var(--rose);
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #5a5246;
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    @media (max-width: 768px) {
+      section {
+        padding: 4rem 1.5rem;
+        min-height: auto;
+      }
+      .wrap,
+      .inner {
+        padding: 0 0;
+      }
+      .hero-section {
+        padding-top: 8rem;
+      }
+      .hero-text {
+        max-width: 100%;
+      }
+      .split,
+      .about-section .inner,
+      .prewedding-section .split,
+      .contact .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      .film-grid,
+      .loc-row,
+      .journal-grid {
+        grid-template-columns: 1fr;
+      }
+      .svc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+
+  <div class="video-wrapper">
+    <video id="scroll-video" preload="auto" muted playsinline>
+      <source src="Assests/GSAP/GSAP-03.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-col col-left">
+          <div class="menu-toggle" id="menuToggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
+            <i class="icon-open">&#9776;</i>
+            <i class="icon-close">&times;</i>
+          </div>
+          <nav class="header-nav" id="headerNav" aria-hidden="true">
+            <ul>
+              <li><a href="http://melrishweddings.com/" class="active" aria-current="page">Home</a></li>
+              <li><a href="https://melrishweddings.com/melrish-wedding-packages/">Packages</a></li>
+              <li><a href="https://galleries.melrishweddings.com/">Gallery</a></li>
+              <li><a href="https://melrishweddings.com/about-us/">About Us</a></li>
+              <li><a href="https://melrishweddings.com/blog/">Journal</a></li>
+              <li><a href="https://melrishweddings.com/contact-us/">Contact Us</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="header-col col-center">
+          <a href="https://melrishweddings.com/">
+            <img width="300" height="88" src="https://melrishweddings.com/wp-content/uploads/2017/02/2017-Logo-copy-white-300x88.png" alt="The MelRish Studio" class="logo-img">
+          </a>
+        </div>
+        <div class="header-col col-right"></div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero-section hero">
+      <div class="wrap">
+        <div class="hero-text reveal">
+          <span class="eyebrow">Wedding Photographer &amp; Videographer — Dubai &amp; Worldwide</span>
+          <h1>Your day, told the way it <em>actually</em> happened.</h1>
+          <p class="sub">Fine art wedding photography and cinematic films in Dubai.</p>
+          <p>We photograph the happy tears, the stolen glances, the chaos on the dance floor. Real moments, captured as they unfold, never staged.</p>
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="num">17+</div>
+              <div class="label">Years shooting</div>
+            </div>
+            <div class="stat-item">
+              <div class="num">1,000+</div>
+              <div class="label">Weddings captured</div>
+            </div>
+            <div class="stat-item">
+              <div class="num">30+</div>
+              <div class="label">Countries</div>
+            </div>
+          </div>
+          <div class="hero-cta">
+            <a href="https://wa.me/971527629512?text=Hi%20Melrish%2C%20I%27d%20like%20to%20request%20your%20wedding%20packages%20and%20availability." class="btn">Get a Quote</a>
+            <a href="https://melrishweddings.com/melrish-wedding-packages/" class="btn btn-line">View Packages</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wedding Films -->
+    <section class="films-section">
+      <div class="inner">
+        <div class="section-head">
+          <span class="eyebrow">Wedding Films</span>
+          <h2>Cinematic wedding films from Dubai and beyond</h2>
+          <p>Our Dubai wedding videographers build each film slowly, taking in every moment, so the finished story works like a time machine back to the day it happened. Documentary in style, cinematic in feel, and never staged.</p>
+        </div>
+        <div class="film-grid">
+          <div class="film-card" style="background-image:url('https://img.youtube.com/vi/AR_yhqZW-wE/maxresdefault.jpg');background-size:cover;background-position:center;"><div class="play-icon">&#9654;</div></div>
+          <div class="film-card" style="background-image:url('https://img.youtube.com/vi/th3JVhofKIw/maxresdefault.jpg');background-size:cover;background-position:center;"><div class="play-icon">&#9654;</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Same-Day Edit -->
+    <section class="sde-section">
+      <div class="wrap">
+        <div class="split flip">
+          <div class="split-text">
+            <span class="eyebrow">Same-Day Edit</span>
+            <h2>The film your guests never saw coming</h2>
+            <p>Picture the last night of your celebration. Everyone settles into their seats, the big screen lights up, and your love story plays back as a cinematic short, edited on-site while you were still dancing.</p>
+            <p>That is the magic of a same-day edit. The one highlight reel you will want to replay again and again.</p>
+            <a href="https://wa.me/971527629512?text=Hi%20Melrish%2C%20I%27d%20like%20to%20know%20more%20about%20your%20same-day%20edit%20wedding%20films." class="btn btn-ghost">Ask About Same-Day Edits</a>
+          </div>
+          <div class="split-img wide">
+            <div class="film" data-video="LD4kep_nXbU" style="aspect-ratio:16/9">
+              <img decoding="async" src="https://img.youtube.com/vi/LD4kep_nXbU/maxresdefault.jpg" alt="Same-day edit wedding film by The Melrish Studio, play to watch">
+              <div class="play"><span>&#9654;</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section story section-vid">
+      <video class="sec-video" id="vid-about" preload="auto" muted playsinline>
+        <source src="Assests/GSAP/GSAP-01.mp4" type="video/mp4">
+      </video>
+      <div class="sec-overlay dark"></div>
+      <div class="inner">
+        <div class="story-img">
+          <img decoding="async" src="https://melrishweddings.com/wp-content/uploads/2025/03/Melrish-9823-2.jpg" alt="Melon and Arish, founders and lead wedding photographers at The Melrish Studio Dubai">
+        </div>
+        <div>
+          <div class="tagline">Meet Melon & Arish</div>
+          <h2>How our own wedding changed the way we capture yours</h2>
+          <p>We are Melon and Arish, the husband-and-wife team behind The Melrish Studio. When we got married, we thought we had it covered. The best photographers, the right poses, every angle. Then we opened our album and something felt off. The photos were beautiful, but they felt staged. The story was missing. The real moments were missing.</p>
+          <p>That was when it clicked. Weddings are not about perfect poses. They are about emotion, the unscripted moments, the memories that unfold on their own.</p>
+          <a class="btn" href="#">Meet the Studio</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prewedding -->
+    <section class="prewedding-section">
+      <div class="wrap">
+        <div class="split">
+          <div class="split-img reveal">
+            <img decoding="async" src="https://melrishweddings.com/wp-content/uploads/2024/07/MelRish-0514-scaled.jpg" alt="Prewedding photoshoot at a scenic Dubai location by The Melrish Studio">
+          </div>
+          <div class="split-text reveal">
+            <span class="eyebrow">Prewedding Shoot in Dubai</span>
+            <h2>Before the "I do," let's capture the "just us"</h2>
+            <p>We sit down with you first to talk themes and pick the best spots in Dubai or anywhere across the UAE, then plan the shoot your way.</p>
+            <p>Keep it simple with photos only, or add video for a save-the-date edit that tells your story. A fun way to celebrate before the wedding-week madness begins.</p>
+            <a href="https://wa.me/971527629512?text=Hi%20Melrish%2C%20I%27d%20like%20to%20plan%20a%20prewedding%20shoot%20in%20Dubai." class="btn btn-ghost">Plan a Prewedding Shoot</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Locations -->
+    <section class="locations-section">
+      <div class="inner">
+        <div class="tagline">Where We Shoot</div>
+        <h2>Three home cities, weddings everywhere</h2>
+        <div class="loc-row">
+          <div class="loc"><a href="https://melrishweddings.com/melrish-philippines/">Manila</a></div>
+          <div class="loc"><span>Dubai</span></div>
+          <div class="loc"><span>India</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Journal -->
+    <section class="blog journal-section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">The Journal</span>
+          <h2>Latest from the studio</h2>
+        </div>
+        <div class="blog-grid">
+          <a href="https://melrishweddings.com/17-years-of-melrish-weddings-what-this-journey-really-taught-us/" class="post reveal">
+            <div class="post-img"><img decoding="async" src="https://melrishweddings.com/wp-content/uploads/2026/02/melrish-66269-1024x683.jpg" alt="Melrish team celebrating 17 years of wedding storytelling" data-lazy-src="https://melrishweddings.com/wp-content/uploads/2026/02/melrish-66269-1024x683.jpg" data-ll-status="loaded" class="entered lazyloaded"><noscript><img decoding="async" src="https://melrishweddings.com/wp-content/uploads/2026/02/melrish-66269-1024x683.jpg" alt="Melrish team celebrating 17 years of wedding storytelling"></noscript></div>
+            <div class="post-body"><span class="post-date">February 18, 2026</span><h3>17 Years of Melrish Weddings: What This Journey Really Taught Us</h3><span class="read">Read More</span></div>
+          </a>
+          <a href="https://melrishweddings.com/a-wedding-that-reminded-us-why-we-do-this/" class="post reveal">
+            <div class="post-img"><img decoding="async" src="https://melrishweddings.com/wp-content/uploads/2026/02/7.jpg" alt="Heartfelt wedding in Antique documented by The Melrish Studio" data-lazy-src="https://melrishweddings.com/wp-content/uploads/2026/02/7.jpg" data-ll-status="loaded" class="entered lazyloaded"><noscript><img decoding="async" src="https://melrishweddings.com/wp-content/uploads/2026/02/7.jpg" alt="Heartfelt wedding in Antique documented by The Melrish Studio"></noscript></div>
+            <div class="post-body"><span class="post-date">February 1, 2026</span><h3>A Wedding That Reminded Us Why We Do This</h3><span class="read">Read More</span></div>
+          </a>
+          <a href="https://melrishweddings.com/its-a-connection-beyond-the-contract/" class="post reveal">
+            <div class="post-img"><img decoding="async" alt="Ken and Lianne's wedding captured by The Melrish Studio" srcset="https://melrishweddings.com/wp-content/uploads/2025/12/IMG_7616-768x1024.jpg, https://melrishweddings.com/wp-content/uploads/2025/12/IMG_7616-768x1024@2x.jpg 2x"></div>
+            <div class="post-body"><span class="post-date">December 24, 2025</span><h3>It's a Connection Beyond the Contract</h3><span class="read">Read More</span></div>
+          </a>
+        </div>
+        <div style="text-align:center;margin-top:48px" class="reveal in">
+          <a href="https://melrishweddings.com/blog/" class="btn btn-ghost">Read the Journal</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- More Services -->
+    <section class="services-section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">More From Melrish</span>
+          <h2>Beyond the wedding day</h2>
+        </div>
+        <div class="svc-grid">
+          <div class="svc reveal">
+            <h3>Family Photographer in Dubai</h3>
+            <p>Studio and outdoor sessions built around your family's style, relaxed and unhurried. A range of packages to suit different budgets, whether it is a casual shoot in the park or an intimate session in our studio.</p>
+            <a href="https://wa.me/971527629512?text=Hi%20Melrish%2C%20I%27d%20like%20to%20book%20a%20family%20photography%20session%20in%20Dubai.">Book a Family Session</a>
+          </div>
+          <div class="svc reveal">
+            <h3>Video Reels for Your Business</h3>
+            <p>Content that earns views and drives sales, made by the same team behind our wedding films. Book a 15-minute complimentary call with our creators to talk through ideas.</p>
+            <a href="http://www.melrish.com">Visit Melrish.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Good to Know</span>
+          <h2>Wedding photography and videography in Dubai, answered</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item reveal" open>
+            <summary>How much does a wedding photographer cost in Dubai?</summary>
+            <p>Wedding photography in Dubai usually runs from around AED 7,000 to AED 18,000 for full-day coverage, with luxury and combined photo-and-film packages priced above that. We build each package around your day, so the most accurate way to get a figure is to send us your date and venue for a tailored quote.</p>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Do you offer both wedding photography and videography?</summary>
+            <p>Yes. We are a full wedding photography and videography team in Dubai. One studio covers your day with fine art photography and cinematic documentary films, including same-day edits, so the look and feel stay consistent across both.</p>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Do you travel for destination weddings outside Dubai?</summary>
+            <p>Yes. We are based in Dubai and shoot across the UAE, with a second studio in Manila, and we travel worldwide for destination weddings. In 17 years we have photographed more than 1,000 weddings across many cultures and countries.</p>
+          </details>
+          <details class="faq-item reveal">
+            <summary>What is a same-day edit wedding video?</summary>
+            <p>A same-day edit is a short cinematic film we edit on-site during your celebration and play back to your guests the same night, usually at the reception. It is one of our signature services and a moment your guests never see coming.</p>
+          </details>
+          <details class="faq-item reveal">
+            <summary>How far in advance should we book?</summary>
+            <p>Dubai's wedding season runs roughly October to April and the best dates book months ahead. If you have a date in mind, reach out early so we can hold it for you.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Get in Touch</span>
+          <h2>Let's talk about your day</h2>
+        </div>
+        <div class="contact-grid">
+          <div class="reveal">
+            <div class="ci">
+              <h3>Dubai Studio</h3>
+              <p>
+                The Shed, Unit 1, 8th Street<br>
+                Al Quoz 3, Dubai, UAE<br>
+                WhatsApp: <a href="https://wa.me/971527629512">+971 52 762 9512</a><br>
+                Call: <a href="tel:+97145489960">+971 4 548 9960</a>
+              </p>
+            </div>
+            <div class="ci">
+              <h3>Manila Studio</h3>
+              <p>
+                4F Unit 4, C&amp;D McKinley Town Center<br>
+                Commerce &amp; Industry Plaza, Park Avenue<br>
+                Taguig, Philippines<br>
+                Phone: <a href="tel:+639178951993">+63 917 895 1993</a>
+              </p>
+            </div>
+          </div>
+          <div class="reveal">
+            <div class="ci">
+              <h3>Email</h3>
+              <p><a href="mailto:hello@melrish.com">hello@melrish.com</a></p>
+            </div>
+            <div class="ci">
+              <h3>Ready to start?</h3>
+              <p>Tell us your date and venue and we will send our packages and availability.</p>
+              <a href="https://wa.me/971527629512?text=Hi%20Melrish%2C%20I%27d%20like%20to%20request%20your%20wedding%20packages%20and%20availability." class="btn" style="margin-top:18px;border-color:var(--paper);background:var(--paper);color:var(--ink)">Request Packages</a>
+              <p style="margin-top:16px;font-size:.92rem"><a href="https://melrishweddings.com/contact-us/" style="border-bottom:1px solid var(--rose)">Or use our contact form</a></p>
+            </div>
+            <div class="socials">
+              <a href="https://instagram.com/melrishweddings">Instagram</a>
+              <a href="https://www.youtube.com/c/TheMelRishStudio/videos">YouTube</a>
+              <a href="https://www.facebook.com/melrishweddings">Facebook</a>
+              <a href="https://www.pinterest.com/themelrishstudio/">Pinterest</a>
+              <a href="https://vimeo.com/themelrishstudio">Vimeo</a>
+              <a href="https://www.linkedin.com/company/themelrishstudio">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    &copy; The Melrish Studio 2026 — Dubai Wedding Photographers &amp; Cinematographers
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('menuToggle').addEventListener('click', function() {
+    this.classList.toggle('open');
+    var expanded = this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true';
+    this.setAttribute('aria-expanded', expanded);
+    document.getElementById('headerNav').classList.toggle('open');
+    document.getElementById('headerNav').setAttribute('aria-hidden', expanded === 'true' ? 'false' : 'true');
+  });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/ScrollTrigger.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  function setupScrollVideo(videoEl, triggerEl) {
+    if (!videoEl) return;
+    videoEl.classList.add('video-background');
+    var tl = gsap.timeline({
+      defaults: { duration: 1 },
+      scrollTrigger: {
+        trigger: triggerEl,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+    tl.fromTo(
+      videoEl,
+      { currentTime: 0 },
+      { currentTime: videoEl.duration || 1 }
+    );
+  }
+
+  var heroVideo = document.querySelector('#scroll-video');
+  if (heroVideo) {
+    var heroTl = gsap.timeline({
+      defaults: { duration: 1 },
+      scrollTrigger: {
+        trigger: '#container',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true
+      }
+    });
+    heroTl.fromTo(
+      heroVideo,
+      { currentTime: 0 },
+      { currentTime: heroVideo.duration || 1 }
+    );
+  }
+
+  var secVideos = document.querySelectorAll('.section-vid');
+  secVideos.forEach(function(section) {
+    var vid = section.querySelector('.sec-video');
+    if (!vid) return;
+    setupScrollVideo(vid, section);
+  });
+
+  gsap.to('.video-wrapper', {
+    scrollTrigger: {
+      trigger: '.journal-section',
+      start: 'top bottom',
+      end: 'top bottom-=33%',
+      scrub: true
+    },
+    opacity: 0,
+    ease: 'none'
+  });
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if (revealEls.length) {
+    var ro = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          ro.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function(el) { ro.observe(el); });
+  }
+});
+</script>
+
+</body>
+</html>
