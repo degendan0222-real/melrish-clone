@@ -1183,19 +1183,6 @@
         grid-template-columns: 1fr;
       }
     }
-
-    @media (hover: none) and (pointer: coarse) {
-      .video-wrapper video,
-      .sec-video {
-        display: none;
-      }
-      .video-wrapper {
-        background: #0a0a0a;
-      }
-      .section-vid {
-        background: #0a0a0a;
-      }
-    }
   </style>
 </head>
 <body>
@@ -1203,7 +1190,7 @@
 <div id="container">
 
     <div class="video-wrapper">
-      <video id="scroll-video" preload="auto" muted playsinline autoplay>
+      <video id="scroll-video" preload="auto" muted playsinline>
         <source src="Assests/GSAP/GSAP-03.mp4" type="video/mp4">
       </video>
       <div class="video-overlay"></div>
@@ -1307,7 +1294,7 @@
 
     <!-- About -->
     <section class="about-section story section-vid">
-      <video class="sec-video" id="vid-about" preload="auto" muted playsinline autoplay>
+      <video class="sec-video" id="vid-about" preload="auto" muted playsinline>
         <source src="Assests/GSAP/GSAP-01.mp4" type="video/mp4">
       </video>
       <div class="sec-overlay dark"></div>
@@ -1513,11 +1500,10 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-  if (isMobile) return;
   gsap.registerPlugin(ScrollTrigger);
 
   function setupScrollVideo(videoEl, triggerEl) {
-    if (!videoEl) return;
+    if (!videoEl || isMobile) return;
     videoEl.classList.add('video-background');
     var tl = gsap.timeline({
       defaults: { duration: 1 },
@@ -1536,7 +1522,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   var heroVideo = document.querySelector('#scroll-video');
-  if (heroVideo) {
+  if (heroVideo && !isMobile) {
     var heroTl = gsap.timeline({
       defaults: { duration: 1 },
       scrollTrigger: {
